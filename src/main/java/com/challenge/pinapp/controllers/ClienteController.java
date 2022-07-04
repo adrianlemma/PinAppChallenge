@@ -32,7 +32,9 @@ public class ClienteController {
         } catch(ClienteException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    e.getMessage().isEmpty()? "Error interno, verifique los datos y vuelva a intentarlo" : e.getMessage()
+            );
         }
     }
 
@@ -41,7 +43,7 @@ public class ClienteController {
         try {
             return ResponseEntity.ok(clienteServices.listarClientes());
         } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -50,7 +52,7 @@ public class ClienteController {
         try {
             return ResponseEntity.ok(calcularKpiDeClientes.execute());
         } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }
