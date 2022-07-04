@@ -46,7 +46,7 @@ public class ClienteServiceTest {
         clientes.add(cliente);
         when(clienteRepository.findAll()).thenReturn(clientes);
         List<ClienteModel> result = useCase.listarClientes();
-        assertFalse(clientes.isEmpty());
-        assertEquals(1, clientes.size());
+        assertFalse(result.isEmpty());
+        assertEquals(1, result.size());
     }
 }

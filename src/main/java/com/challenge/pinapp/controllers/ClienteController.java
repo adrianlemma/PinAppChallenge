@@ -2,7 +2,6 @@ package com.challenge.pinapp.controllers;
 
 import com.challenge.pinapp.exceptions.ClienteException;
 import com.challenge.pinapp.models.ClienteModel;
-import com.challenge.pinapp.models.KpiDeClientes;
 import com.challenge.pinapp.services.ClienteService;
 import com.challenge.pinapp.usecases.CalcularKpiDeClientes;
 import com.challenge.pinapp.usecases.ValidarDatosCliente;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -35,7 +32,7 @@ public class ClienteController {
         } catch(ClienteException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -44,7 +41,7 @@ public class ClienteController {
         try {
             return ResponseEntity.ok(clienteServices.listarClientes());
         } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -53,7 +50,7 @@ public class ClienteController {
         try {
             return ResponseEntity.ok(calcularKpiDeClientes.execute());
         } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }
