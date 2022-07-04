@@ -8,6 +8,7 @@ import com.challenge.pinapp.usecases.CalcularKpiDeClientes;
 import com.challenge.pinapp.usecases.ValidarDatosCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,22 +28,32 @@ public class ClienteController {
     private CalcularKpiDeClientes calcularKpiDeClientes;
 
     @PostMapping("/crearcliente")
-    public ClienteModel crearCliente(@RequestBody ClienteModel cliente) {
+    public ResponseEntity<Object> crearCliente(@RequestBody ClienteModel cliente) {
         try {
             validarDatosCliente.execute(cliente);
-            return clienteServices.guardarCliente(cliente);
+            return ResponseEntity.ok(clienteServices.guardarCliente(cliente));
         } catch(ClienteException e) {
-            return null;
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/listclientes")
-    public List<ClienteModel> listClientes() {
-        return clienteServices.listarClientes();
+    public ResponseEntity<Object> listClientes() {
+        try {
+            return ResponseEntity.ok(clienteServices.listarClientes());
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/kpideclientes")
-    public KpiDeClientes kpiDeClientes() {
-        return calcularKpiDeClientes.execute();
+    public ResponseEntity<Object> kpiDeClientes() {
+        try {
+            return ResponseEntity.ok(calcularKpiDeClientes.execute());
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
