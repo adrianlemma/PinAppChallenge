@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ClienteServices {
+public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;

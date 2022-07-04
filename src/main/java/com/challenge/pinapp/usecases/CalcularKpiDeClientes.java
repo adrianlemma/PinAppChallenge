@@ -2,16 +2,18 @@ package com.challenge.pinapp.usecases;
 
 import com.challenge.pinapp.models.ClienteModel;
 import com.challenge.pinapp.models.KpiDeClientes;
-import com.challenge.pinapp.services.ClienteServices;
+import com.challenge.pinapp.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 public class CalcularKpiDeClientes {
 
     @Autowired
-    private ClienteServices clienteServices;
+    private ClienteService clienteServices;
 
     public KpiDeClientes execute() {
         List<ClienteModel> clientes = clienteServices.listarClientes();

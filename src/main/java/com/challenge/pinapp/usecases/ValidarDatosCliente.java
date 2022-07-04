@@ -2,11 +2,13 @@ package com.challenge.pinapp.usecases;
 
 import com.challenge.pinapp.exceptions.ClienteException;
 import com.challenge.pinapp.models.ClienteModel;
+import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 
 import static java.util.Objects.nonNull;
 
+@Service
 public class ValidarDatosCliente {
 
     private static int ESPERANZA_DE_VIDA = 81;
