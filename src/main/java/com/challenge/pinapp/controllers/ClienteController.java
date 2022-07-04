@@ -1,7 +1,9 @@
 package com.challenge.pinapp.controllers;
 
 import com.challenge.pinapp.models.ClienteModel;
+import com.challenge.pinapp.models.KpiDeClientes;
 import com.challenge.pinapp.services.ClienteServices;
+import com.challenge.pinapp.usecases.CalcularKpiDeClientes;
 import com.challenge.pinapp.usecases.ValidarDatosCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ public class ClienteController {
 
     private ValidarDatosCliente validarDatosCliente;
 
+    private CalcularKpiDeClientes calcularKpiDeClientes;
+
     @PostMapping("/crearcliente")
     public ClienteModel crearCliente(@RequestBody ClienteModel cliente) {
         validarDatosCliente.execute(cliente);
@@ -30,7 +34,7 @@ public class ClienteController {
     }
 
     @GetMapping("/kpideclientes")
-    public String kpiDeClientes() {
-        return "Falta implementar";
+    public KpiDeClientes kpiDeClientes() {
+        return calcularKpiDeClientes.execute();
     }
 }
