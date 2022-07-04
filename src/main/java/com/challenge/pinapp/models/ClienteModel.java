@@ -1,6 +1,7 @@
 package com.challenge.pinapp.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Past;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -21,6 +22,7 @@ public class ClienteModel {
     @Column(nullable = false)
     private int edad;
 
+    @Past
     @Column(nullable = false)
     private OffsetDateTime fechaDeNacimiento;
 
