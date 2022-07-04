@@ -2,6 +2,7 @@ package com.challenge.pinapp.controllers;
 
 import com.challenge.pinapp.models.ClienteModel;
 import com.challenge.pinapp.services.ClienteServices;
+import com.challenge.pinapp.usecases.ValidarDatosCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,11 @@ public class ClienteController {
     @Autowired
     private ClienteServices clienteServices;
 
+    private ValidarDatosCliente validarDatosCliente;
+
     @PostMapping("/crearcliente")
     public ClienteModel crearCliente(@RequestBody ClienteModel cliente) {
+        validarDatosCliente.execute(cliente);
         return clienteServices.guardarCliente(cliente);
     }
 

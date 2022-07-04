@@ -1,7 +1,11 @@
 package com.challenge.pinapp.models;
 
+import com.challenge.pinapp.exceptions.ClienteException;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+
+import static java.util.Objects.nonNull;
 
 @Entity
 @Table(name = "cliente")
