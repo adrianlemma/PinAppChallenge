@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
-    ClienteServices clienteServices;
+    private ClienteServices clienteServices;
 
     @PostMapping("/crearcliente")
     public ClienteModel crearCliente(@RequestBody ClienteModel cliente) {
