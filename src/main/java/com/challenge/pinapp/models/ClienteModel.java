@@ -1,7 +1,10 @@
 package com.challenge.pinapp.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -13,16 +16,23 @@ public class ClienteModel {
     @Column(unique = true, nullable = false)
     private Long id;
 
+    @NotNull(message = "Debe ingresar el campo nombre")
+    @NotBlank(message = "El nombre no puede estar vacío")
     @Column(nullable = false)
     private String nombre;
 
+    @NotNull(message = "Debe ingresar el campo apellido")
+    @NotBlank(message = "El apellido no puede estar vacío")
     @Column(nullable = false)
     private String apellido;
 
+    @NotNull(message = "Debe ingresar el campo edad")
+    @Positive(message = "La edad debe ser mayor a cero")
     @Column(nullable = false)
     private int edad;
 
-    @Past
+    @Past(message = "La fecha de nacimiento debe ser anterior a la fecha actual")
+    @NotNull(message = "Debe ingresar el campo fecha_de_nacimiento")
     @Column(nullable = false)
     private OffsetDateTime fechaDeNacimiento;
 
