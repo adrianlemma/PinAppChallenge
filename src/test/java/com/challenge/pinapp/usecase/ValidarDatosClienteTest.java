@@ -9,8 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import java.time.OffsetDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidarDatosClienteTest {
 
@@ -46,6 +45,7 @@ public class ValidarDatosClienteTest {
     @Test
     void testEdadNoCoincideConFechaDeNacimiento() {
         cliente.setEdad(10);
+        cliente.setFechaDeNacimiento(OffsetDateTime.now().minusDays(1));
         assertThrows(ClienteException.class, () -> useCase.execute(cliente));
     }
 
@@ -53,5 +53,11 @@ public class ValidarDatosClienteTest {
     void testSeIntentaForzarFechaProbableDeMuerte() {
         cliente.setFechaProbableDeMuerte(OffsetDateTime.now());
         assertThrows(ClienteException.class, () -> useCase.execute(cliente));
+    }
+
+    @Test
+    void testConstructorVacioDeClienteModelSoloPorCoverage() {
+        cliente = new ClienteModel();
+        assertNotNull(cliente);
     }
 }

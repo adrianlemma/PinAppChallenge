@@ -2,6 +2,7 @@ package com.challenge.pinapp.controllers;
 
 import com.challenge.pinapp.exceptions.ClienteException;
 import com.challenge.pinapp.models.ClienteModel;
+import com.challenge.pinapp.models.KpiDeClientes;
 import com.challenge.pinapp.services.ClienteService;
 import com.challenge.pinapp.usecases.CalcularKpiDeClientes;
 import com.challenge.pinapp.usecases.ValidarDatosCliente;
@@ -14,13 +15,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.*;
 
 public class ClienteControllerTest {
 
@@ -93,6 +94,10 @@ public class ClienteControllerTest {
     class TestKpiDeClientes {
         @Test
         void testCalcularKpiCorrectamente() {
+            KpiDeClientes kpi = new KpiDeClientes();
+            kpi.setEdadPromedio(new BigDecimal("30.123456"));
+            kpi.setDesviacionEstandar(new BigDecimal("1.123456"));
+            when(calcularKpiDeClientes.execute()).thenReturn(kpi);
             ResponseEntity<Object> result = useCase.kpiDeClientes();
             assertNotNull(result);
             assertEquals(HttpStatus.OK, result.getStatusCode());
