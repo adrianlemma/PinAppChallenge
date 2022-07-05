@@ -36,7 +36,7 @@ public class ClienteController {
             validarDatosCliente.execute(cliente);
             return ResponseEntity.ok(clienteServices.guardarCliente(cliente));
         } catch(ClienteException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e);
         } catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     isNull(e.getMessage()) || e.getMessage().isEmpty()? "Error interno, verifique los datos y vuelva a intentarlo" : e.getMessage()
@@ -59,7 +59,9 @@ public class ClienteController {
             KpiDeClientes kpi = calcularKpiDeClientes.execute();
             DecimalFormat decimalFormat = new DecimalFormat("#.00000");
             String desviacion = decimalFormat.format(kpi.getDesviacionEstandar().doubleValue());
+            String promedio = decimalFormat.format(kpi.getEdadPromedio().doubleValue());
             kpi.setDesviacionEstandar(new BigDecimal(desviacion.replace(",", ".")));
+            kpi.setEdadPromedio(new BigDecimal(promedio.replace(",", ".")));
             return ResponseEntity.ok(kpi);
         } catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
